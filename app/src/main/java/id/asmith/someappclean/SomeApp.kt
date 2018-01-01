@@ -24,10 +24,11 @@ class SomeApp : Application() {
     override fun onCreate() {
         super.onCreate()
         mInstance = this
-        mAppComponent = initApplicationComponent()
+        mAppComponent = initAppComponent()
 
     }
-    private fun initApplicationComponent(): AppComponent {
+
+    private fun initAppComponent(): AppComponent {
         return DaggerAppComponent.builder()
                 .appModule(AppModule(this))
                 .build()

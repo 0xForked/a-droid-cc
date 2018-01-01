@@ -20,7 +20,6 @@ object AppConstants {
     val DB_TABLE = "user"
     val KEY_ID = "id"
     val KEY_UID = "uid"
-    val KEY_USERNAME ="username"
     val KEY_NAME ="name"
     val KEY_EMAIL ="email"
     val KEY_PHONE ="phone"
@@ -31,9 +30,7 @@ object AppConstants {
 
     //Remote data url
     private val BASE_URL = "http://192.168.43.70/project/"
-
     private val NAME_AND_VERSION = "queue-api/api/v1/"
-
     val API_URL = BASE_URL + NAME_AND_VERSION
 
 

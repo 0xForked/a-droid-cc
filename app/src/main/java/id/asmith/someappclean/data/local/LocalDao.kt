@@ -7,4 +7,4 @@ package id.asmith.someappclean.data.local
  * aasumitro@gmail.com
  */
 
-class localDao() {}
+class LocalDao() {}

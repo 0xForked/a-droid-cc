@@ -3,7 +3,6 @@
     package="id.asmith.someappclean">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".SomeApp"
@@ -21,7 +20,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.main.MainActivity"/>
-        <activity android:name=".ui.auth.AuthActivity"/>
+        <activity
+            android:name=".ui.auth.AuthActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
     </application>
 
 </manifest>
