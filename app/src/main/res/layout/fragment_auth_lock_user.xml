@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.fragments.AuthLockFragment">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/thirty_dp">
+
+        <RelativeLayout
+            android:id="@+id/lay_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/fifty_dp"
+            android:padding="@dimen/twenty_dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            >
+
+            <ImageView
+                android:id="@+id/image_lock_user"
+                android:layout_width="@dimen/seventy_five_dp"
+                android:layout_height="@dimen/seventy_five_dp"
+                android:contentDescription="@string/desc_image"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/text_lock_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/five_dp"
+                android:textSize="@dimen/twenty_sp"
+                android:layout_marginTop="@dimen/fifteen_dp"
+                android:hint="@string/full_name"
+                android:layout_toEndOf="@id/image_lock_user" />
+
+            <TextView
+                android:id="@+id/text_lock_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/five_dp"
+                android:textSize="@dimen/eighteen_sp"
+                android:hint="@string/email"
+                android:layout_toEndOf="@id/image_lock_user"
+                android:layout_below="@+id/text_lock_name"/>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                android:src="@drawable/ic_more_vert"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:id="@+id/button_lock_menu"/>
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/text_lock_caption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/twenty_dp"
+            android:text="@string/caption_enter_password"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/fifteen_sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lay_user" />
+
+        <EditText
+            android:id="@+id/input_lock_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten_dp"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:padding="@dimen/fifteen_dp"
+            android:textColor="@color/colorPrimary"
+            android:textColorHint="@color/gray"
+            android:theme="@style/PrimaryFocus"
+            android:windowSoftInputMode="stateHidden"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_lock_caption" />
+
+        <TextView
+            android:id="@+id/text_lock_forgot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/fifteen_dp"
+            android:text="@string/caption_forgot_password"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/eighteen_sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/input_lock_password" />
+
+        <Button
+            android:id="@+id/button_lock_go"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/twenty_dp"
+            android:background="@color/colorPrimary"
+            android:text="@string/button_login"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_lock_forgot" />
+
+        <TextView
+            android:id="@+id/text_lock_singin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/twenty_five_dp"
+            android:text="@string/caption_change_account"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/twenty_sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_lock_go" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</ScrollView>

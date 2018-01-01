@@ -1,4 +1,4 @@
-package id.asmith.someappclean.data.local.pref
+package id.asmith.someappclean.data.local
 
 
 /**
@@ -6,3 +6,5 @@ package id.asmith.someappclean.data.local.pref
  * https://asmith.my.id
  * aasumitro@gmail.com
  */
+
+class localDao() {}

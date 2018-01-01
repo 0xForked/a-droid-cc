@@ -1,3 +1,53 @@
 <resources>
-    <string name="app_name">SomeAppClean</string>
+    <!-- app -->
+    <string name="app_name">SAClean</string>
+    <string name="app_name_caps">SOME APP CLEAN</string>
+    <string name="app_description">Some App by FookiPoke</string>
+
+    <!--play store-->
+    <string name="app_google_play_store_link">"https://play.google.com/store/apps/details?id="</string>
+    <string name="app_market_link">"market://details?id="</string>
+
+    <!-- company -->
+    <string name="company_name">FookiPoke App</string>
+    <string name="company_email">fookiPoke@gmail.com</string>
+    <string name="company_number">+62 822 7111 5593</string>
+
+    <!-- action -->
+    <string name="action_delete_account">Remove account from device</string>
+
+    <!-- content description -->
+    <string name="desc_logo">Logo</string>
+    <string name="desc_image">Image</string>
+
+    <!-- Caption -->
+    <string name="caption_enter_email">Please enter your registered email address</string>
+    <string name="caption_basic_information">Basic information</string>
+    <string name="caption_private_information">Private information</string>
+    <string name="caption_register">Do not have an account? Sing up</string>
+    <string name="caption_login">Already a member? Sign in</string>
+    <string name="caption_forgot_password">Forgot password?</string>
+    <string name="caption_enter_password">Enter password</string>
+    <string name="caption_change_account">Log in with another account</string>
+    <string name="caption_valid_email">Email invalid</string>
+    <string name="caption_empty_name">Name field is empty</string>
+    <string name="caption_empty_email">Email field is empty</string>
+    <string name="caption_empty_phone">Phone field is empty</string>
+    <string name="caption_empty_password">Password field is empty</string>
+    <string name="caption_valid_phone">Phone invalid example : +628888</string>
+
+    <!-- Button -->
+    <string name="button_submit">Submit</string>
+    <string name="button_back">Back</string>
+    <string name="button_signin">Sign In</string>
+    <string name="button_signup">Sign up</string>
+    <string name="button_login">Log in</string>
+
+    <!-- Sing in/up -->
+    <string name="email">Email</string>
+    <string name="phone">Mobile</string>
+    <string name="full_name">Full Name</string>
+    <string name="password">Password</string>
+
+
 </resources>
