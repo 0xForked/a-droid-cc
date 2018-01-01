@@ -9,11 +9,10 @@ for base version cek this <a href="https://github.com/aasumitro/a-droid">Base ve
 </br>
 
 ### Library
- 
-  - <a href="https://developer.android.com/topic/libraries/data-binding/index.html">Android data binding </a>
-  - RxJava
-  - RxAndroid
-  - Dagger 2
+
+  - <a href="https://github.com/ReactiveX/Rxjava">RxJava</a>
+  - <a href="https://github.com/ReactiveX/RxAndroid">RxAndroid </>
+  - <a href="https://github.com/google/dagger">Dagger 2</a>
   - <a href="https://github.com/square/retrofit">Retrofit</a>
   - <a href="https://github.com/square/okhttp">okHttp</a>
   - <a href="https://github.com/Kotlin/anko">Anko</a>
