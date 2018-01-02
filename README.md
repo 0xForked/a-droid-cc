@@ -1,4 +1,4 @@
-# a-droid clean version (update soon after holiday :v)
+# a-droid clean version
 Android app with architecture component MVVM (Model View ViewModel) that use a-rest as a service
 for base version cek this <a href="https://github.com/aasumitro/a-droid">Base version</a> 
 
