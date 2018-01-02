@@ -10,7 +10,7 @@ import java.util.regex.Pattern
  * aasumitro@gmail.com
  */
 
-class  Utils {
+class ValidationUtil {
 
     //Cek valid email
     fun isEmailValid(email: String): Boolean {

@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import id.asmith.someappclean.R
 import id.asmith.someappclean.SomeApp
 import id.asmith.someappclean.ui.splash.SplashActivity
-import id.asmith.someappclean.utils.PrefsUtil
+import id.asmith.someappclean.utils.PreferencesUtil
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.longToast
 import org.jetbrains.anko.startActivity
@@ -24,7 +24,7 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var mPrefsUtil: PrefsUtil
+    lateinit var mPrefsUtil: PreferencesUtil
 
     private val mViewModel: MainViewModel by lazy {
         ViewModelProviders.of(this).get(MainViewModel::class.java)
@@ -41,13 +41,13 @@ class MainActivity : AppCompatActivity() {
 
         buttonLogout.setOnClickListener {
             mViewModel.onAddButtonClicked()
-            mPrefsUtil.putBooleanLogged("logged", false)
+            mPrefsUtil.putRememberUser("logged", false)
             startActivity<SplashActivity>()
             finish()
         }
 
         val loggedStatus = mPrefsUtil
-                .getBooleanLogged(
+                .getRememberUser(
                         "logged",
                         false
                 )

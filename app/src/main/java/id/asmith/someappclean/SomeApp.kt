@@ -2,8 +2,8 @@ package id.asmith.someappclean
 
 import android.app.Application
 import id.asmith.someappclean.di.AppComponent
-import id.asmith.someappclean.di.AppModule
 import id.asmith.someappclean.di.DaggerAppComponent
+import id.asmith.someappclean.di.module.AppModule
 
 
 /**
@@ -29,7 +29,8 @@ class SomeApp : Application() {
     }
 
     private fun initAppComponent(): AppComponent {
-        return DaggerAppComponent.builder()
+        return DaggerAppComponent
+                .builder()
                 .appModule(AppModule(this))
                 .build()
 

@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import id.asmith.someappclean.R
 import kotlinx.android.synthetic.main.fragment_auth_forgot_password.*
 import org.jetbrains.anko.longToast
-import id.asmith.someappclean.utils.Utils as utils
+import id.asmith.someappclean.utils.ValidationUtil as utils
 
 /**
  * Created by Agus Adhi Sumitro on 01/01/2018.

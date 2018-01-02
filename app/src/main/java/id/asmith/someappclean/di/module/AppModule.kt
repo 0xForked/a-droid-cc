@@ -1,11 +1,11 @@
-package id.asmith.someappclean.di
+package id.asmith.someappclean.di.module
 
 import android.content.Context
 import android.content.SharedPreferences
 import dagger.Module
 import dagger.Provides
 import id.asmith.someappclean.SomeApp
-import id.asmith.someappclean.utils.PrefsUtil
+import id.asmith.someappclean.utils.PreferencesUtil
 import javax.inject.Singleton
 
 
@@ -17,15 +17,14 @@ import javax.inject.Singleton
 
 
 @Module
-class AppModule(private val mApp: SomeApp) {
+class AppModule(private val someApp: SomeApp) {
 
     @Provides @Singleton
-    fun provideApplication() = mApp
+    fun provideApplication() = someApp
 
-    @Provides
-    @Singleton
+    @Provides @Singleton
     fun providePreferencesUtil(sharedPreferences: SharedPreferences):
-            PrefsUtil = PrefsUtil(sharedPreferences)
+            PreferencesUtil = PreferencesUtil(sharedPreferences)
 
     @Provides @Singleton
     fun provideSharedPreferences(): SharedPreferences = provideApplication()

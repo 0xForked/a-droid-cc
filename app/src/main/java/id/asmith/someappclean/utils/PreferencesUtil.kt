@@ -9,15 +9,15 @@ import javax.inject.Inject
  * https://asmith.my.id
  * aasumitro@gmail.com
  */
-class PrefsUtil @Inject constructor(private val sharedPreferences: SharedPreferences) {
+class PreferencesUtil @Inject constructor(private val sharedPreferences: SharedPreferences) {
 
-    fun putBooleanLogged(key: String, value: Boolean): Boolean {
+    fun putRememberUser(key: String, value: Boolean): Boolean {
         val editor: SharedPreferences.Editor = sharedPreferences.edit()
         editor.putBoolean(key, value)
         return editor.commit()
     }
 
-    fun getBooleanLogged(key: String, defaultValue: Boolean): Boolean =
+    fun getRememberUser(key: String, defaultValue: Boolean): Boolean =
             sharedPreferences.getBoolean(key, defaultValue)
 
 }

@@ -1,4 +1,4 @@
-package id.asmith.someappclean.utils.rx
+package id.asmith.someappclean.utils.scheduler
 
 import io.reactivex.Scheduler
 
@@ -8,7 +8,7 @@ import io.reactivex.Scheduler
  * https://asmith.my.id
  * aasumitro@gmail.com
  */
-interface SchedulerProvider {
+interface BaseSchedulerProvider {
 
     fun ui(): Scheduler
 

@@ -1,81 +1,62 @@
 package id.asmith.someappclean.ui.splash
 
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import id.asmith.someappclean.R
 import id.asmith.someappclean.SomeApp
 import id.asmith.someappclean.ui.auth.AuthActivity
 import id.asmith.someappclean.ui.main.MainActivity
-import id.asmith.someappclean.utils.PrefsUtil
+import id.asmith.someappclean.utils.PreferencesUtil
 import org.jetbrains.anko.startActivity
 import javax.inject.Inject
 
-class SplashActivity : AppCompatActivity() {
+class SplashActivity : AppCompatActivity(), SplashNavigation {
 
     @Inject
-    lateinit var mPrefsUtil: PrefsUtil
+    lateinit var mPrefsUtil: PreferencesUtil
+
+    private val mViewModel: SplashViewModel by lazy {
+        ViewModelProviders.of(this).get(SplashViewModel::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-        injectSplash()
 
-        val loggedStatus = mPrefsUtil
-                .getBooleanLogged(
+        inject()
+
+        mViewModel.setNavigator(this)
+        mViewModel.startStream(userStatus())
+
+    }
+
+    override fun openAuthActivity() {
+
+        startActivity<AuthActivity>()
+        finish()
+
+    }
+
+    override fun openMainActivity() {
+
+        startActivity<MainActivity>()
+        finish()
+
+    }
+
+    private fun userStatus(): Boolean {
+
+        return mPrefsUtil
+                .getRememberUser(
                         "logged",
                         false
                 )
 
-        //Do thread
-        val background = object : Thread() {
-            override fun run() {
-                try {
-
-                    // Thread will sleep for 2 seconds
-                    sleep((2 * 1000).toLong())
-
-                    if (loggedStatus) {
-                        openMainActivity()
-                        Log.d("SPLASH", "Main Activity")
-                    } else {
-                        openAuthActivity()
-                        Log.d("SPLASH", "Auth Activity")
-                    }
-
-                    finish()
-
-                } catch (e: Exception) {
-
-                    //Print error in logcat (development requirement)
-                    e.printStackTrace()
-
-                }
-            }
-        }
-
-        // start thread
-        background.start()
-
     }
 
-    fun openAuthActivity() {
+    private fun inject() {
 
-        //redirect to Auth Activity
-        startActivity<AuthActivity>()
-
-    }
-
-    fun openMainActivity() {
-
-        //redirect to Main Activity
-        startActivity<MainActivity>()
-
-    }
-
-    private fun injectSplash() {
-
-        //Inject with Dagger
         SomeApp
                 .mInstance
                 .mAppComponent

@@ -38,7 +38,6 @@ dependencies {
 
     //Architecture components
     implementation "android.arch.lifecycle:runtime:$arch_runtime_version"
-    implementation "android.arch.lifecycle:reactivestreams:$arch_component_version"
     implementation "android.arch.lifecycle:extensions:$arch_component_version"
     kapt "android.arch.lifecycle:compiler:$arch_component_version"
 

@@ -1,4 +1,4 @@
-package id.asmith.someappclean.di
+package id.asmith.someappclean.di.module
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -21,22 +21,21 @@ import id.asmith.someappclean.utils.AppConstants as utils
 @Module
 class RemoteModule {
 
-    @Provides @Singleton fun provideGson(): Gson =
+    @Provides @Singleton
+    fun provideGson(): Gson =
             GsonBuilder()
                     .setLenient()
                     .create()
 
-
-    @Provides @Singleton fun provideOkHttpClient(): OkHttpClient =
+    @Provides @Singleton
+    fun provideOkHttpClient(): OkHttpClient =
             OkHttpClient
                     .Builder()
                     .addInterceptor(HttpLoggingInterceptor()
                             .setLevel(HttpLoggingInterceptor.Level.BODY))
                     .build()
 
-
-    @Provides
-    @Singleton
+    @Provides @Singleton
     fun provideRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit =
             Retrofit.Builder()
                     .baseUrl(utils.API_URL)

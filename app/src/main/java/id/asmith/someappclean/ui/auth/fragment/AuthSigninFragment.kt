@@ -15,7 +15,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import id.asmith.someappclean.R
+import id.asmith.someappclean.SomeApp
+import id.asmith.someappclean.ui.splash.SplashActivity
+import id.asmith.someappclean.utils.PreferencesUtil
 import kotlinx.android.synthetic.main.fragment_auth_signin.*
+import org.jetbrains.anko.longToast
+import org.jetbrains.anko.startActivity
+import javax.inject.Inject
 
 
 /**
@@ -24,6 +30,9 @@ import kotlinx.android.synthetic.main.fragment_auth_signin.*
  * aasumitro@gmail.com
  */
 class AuthSigninFragment : Fragment() {
+
+    @Inject
+    lateinit var mPrefsUtil: PreferencesUtil
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -63,6 +72,31 @@ class AuthSigninFragment : Fragment() {
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         text_signin_signup.text = spannableStringBuilderRegister
         text_signin_signup.movementMethod = LinkMovementMethod.getInstance()
+
+        injectSignin()
+
+        button_signin_go.setOnClickListener {
+            mPrefsUtil.putRememberUser("logged", true)
+            activity!!.startActivity<SplashActivity>()
+            activity!!.finish()
+        }
+
+        val loggedStatus = mPrefsUtil
+                .getRememberUser(
+                        "logged",
+                        false
+                )
+
+        activity!!.longToast(loggedStatus.toString())
+    }
+
+
+    private fun injectSignin() {
+       SomeApp
+                .mInstance
+                .mAppComponent
+                .inject(this)
+
     }
 
     private fun replaceForgot() {
