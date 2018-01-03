@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
 import id.asmith.someappclean.R
 import id.asmith.someappclean.SomeApp
+import id.asmith.someappclean.data.remote.ApiService
 import id.asmith.someappclean.ui.auth.fragment.AuthForgotFragment
 import id.asmith.someappclean.ui.auth.fragment.AuthLockFragment
 import id.asmith.someappclean.ui.auth.fragment.AuthSigninFragment
@@ -15,7 +16,9 @@ import id.asmith.someappclean.ui.auth.fragment.AuthSignupFragment
 import id.asmith.someappclean.ui.main.MainActivity
 import id.asmith.someappclean.utils.AppConstants.USER_KEY
 import id.asmith.someappclean.utils.PreferencesUtil
-import org.jetbrains.anko.*
+import org.jetbrains.anko.indeterminateProgressDialog
+import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.toast
 import javax.inject.Inject
 
 /**
@@ -25,8 +28,9 @@ import javax.inject.Inject
  */
 class AuthActivity : AppCompatActivity(), AuthNavigation {
 
-    @Inject
-    lateinit var mPrefsUtil: PreferencesUtil
+    @Inject lateinit var mPrefsUtil: PreferencesUtil
+
+    @Inject lateinit var mApiService : ApiService
 
     private val mViewModel: AuthViewModel by lazy {
         ViewModelProviders.of(this).get(AuthViewModel::class.java)
@@ -35,6 +39,7 @@ class AuthActivity : AppCompatActivity(), AuthNavigation {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_auth)
+
         inject()
 
         if (savedInstanceState == null) {
@@ -43,6 +48,8 @@ class AuthActivity : AppCompatActivity(), AuthNavigation {
             mViewModel.fragmentTransition(userStatus())
 
         }
+
+        mViewModel.setApiIService(mApiService)
 
     }
 
@@ -59,18 +66,7 @@ class AuthActivity : AppCompatActivity(), AuthNavigation {
 
     override fun customToast(text: String) = toast(text)
 
-    override fun customDialog(title: String, message: String) {
-
-        alert(message, title) {
-            yesButton {
-                toast("yes")
-            }
-            noButton {
-                toast("no")
-            }
-        }.show().setCancelable(false)
-
-    }
+    override fun customProgressDialog() = indeterminateProgressDialog("Please wait...")
 
     override fun rememberUser() = mPrefsUtil.putRememberUser(USER_KEY, true)
 

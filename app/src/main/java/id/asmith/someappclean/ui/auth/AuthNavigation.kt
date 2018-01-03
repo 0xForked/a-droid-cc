@@ -1,5 +1,6 @@
 package id.asmith.someappclean.ui.auth
 
+import android.app.ProgressDialog
 import android.widget.Toast
 
 
@@ -14,7 +15,7 @@ interface AuthNavigation {
 
     fun customToast(text: String): Toast
 
-    fun customDialog(title: String, message: String)
+    fun customProgressDialog(): ProgressDialog
 
     fun startMainActivity()
 

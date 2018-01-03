@@ -1,7 +1,7 @@
 package id.asmith.someappclean.data.remote
 
+import io.reactivex.Observable
 import okhttp3.ResponseBody
-import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
@@ -20,7 +20,7 @@ interface ApiService {
     fun signIn (
             @Field("email") email: String,
             @Field("password") password: String
-    ): Call<ResponseBody>
+    ): Observable<ResponseBody>
 
     @FormUrlEncoded
     @POST("auth/signup")
@@ -30,26 +30,26 @@ interface ApiService {
             @Field("phone")reg_phone: String,
             @Field("email")reg_email: String,
             @Field("password")reg_password: String
-    ): Call<ResponseBody>
+    ): Observable<ResponseBody>
 
     @FormUrlEncoded
     @POST("user/password/forgot")
     fun forgotPassword (
             @Field("email") email: String
-    ): Call<ResponseBody>
+    ): Observable<ResponseBody>
 
     @FormUrlEncoded
     @POST("user/password/change")
     fun changePassword (
-            @Field("id") user_id: String,
+            @Field("id") uid: String,
             @Field("password_old")password_old: String,
             @Field("password_new")password_new: String
-    ): Call<ResponseBody>
+    ): Observable<ResponseBody>
 
     @FormUrlEncoded
-    @POST("detail")
+    @POST("user/detail")
     fun userDetail (
-            @Field("uid") user_id: String,
+            @Field("uid") uid: String,
             @Field("token") token: String
-    ): Call<ResponseBody>
+    ): Observable<ResponseBody>
 }

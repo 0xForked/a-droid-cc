@@ -32,8 +32,8 @@ class RemoteModule {
     fun provideRetrofit(httpClient: OkHttpClient): Retrofit =
             Retrofit.Builder()
                     .baseUrl(utils.API_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create())
                     .client(httpClient)
                     .build()
 

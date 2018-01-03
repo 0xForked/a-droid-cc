@@ -51,13 +51,10 @@ class AuthForgotFragment : Fragment() {
                 activity?.longToast( getString(R.string.caption_empty_email))
             if (!utils().isEmailValid(forgotEmail))
                 activity?.longToast( getString(R.string.caption_valid_email))
-            /*if (!forgotEmail.isEmpty() and utils().isEmailValid(forgotEmail))
-                forgotPassword(forgotEmail)*/
+            if (!forgotEmail.isEmpty() and utils().isEmailValid(forgotEmail))
+                mViewModel.onForgotSubmitButtonPressed(forgotEmail)
         }
 
-        text_forgot_submit.setOnClickListener {
-            mViewModel.onForgotSubmitButtonPressed()
-        }
     }
 
 }

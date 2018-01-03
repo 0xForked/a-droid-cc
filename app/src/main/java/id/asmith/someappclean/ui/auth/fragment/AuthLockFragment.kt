@@ -13,6 +13,8 @@ import android.widget.PopupMenu
 import id.asmith.someappclean.R
 import id.asmith.someappclean.ui.auth.AuthViewModel
 import kotlinx.android.synthetic.main.fragment_auth_lock_user.*
+import org.jetbrains.anko.alert
+import org.jetbrains.anko.toast
 
 /**
  * Created by Agus Adhi Sumitro on 01/01/2018.
@@ -80,10 +82,17 @@ class AuthLockFragment : Fragment(), PopupMenu.OnMenuItemClickListener{
         when (item?.itemId) {
 
             R.id.action_delete ->
-                mViewModel.dialog(
-                        "Remove account",
-                        "Are you sure?"
-                )
+                activity!!.alert("ASD", "QWE") {
+                    positiveButton("YES") {
+                        activity!!.toast("yes")
+                    }
+                    negativeButton("DISMISS") {
+                        activity!!.toast("no")
+                    }
+                    neutralPressed("HELP") {
+                        activity!!.toast("help")
+                    }
+                }.show().setCancelable(false)
 
         }
 

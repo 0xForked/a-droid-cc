@@ -16,6 +16,7 @@ import id.asmith.someappclean.R
 import id.asmith.someappclean.ui.auth.AuthViewModel
 import kotlinx.android.synthetic.main.fragment_auth_signup.*
 import org.jetbrains.anko.longToast
+import id.asmith.someappclean.utils.ValidationUtil as util
 
 /**
  * Created by Agus Adhi Sumitro on 01/01/2018.
@@ -63,7 +64,30 @@ class AuthSignupFragment : Fragment() {
         text_signup_signin.movementMethod = LinkMovementMethod.getInstance()
 
         button_signup_go.setOnClickListener {
-            mViewModel.onRegisterButtonPressed()
+            val regName = input_signup_fullName.text.toString().trim()
+            val regUsername = "Asmith_Users" //actually we not need this
+            val regEmail = input_signup_email.text.toString().trim()
+            val regPhone = input_signup_phone.text.toString().trim()
+            val regPassword = input_signup_password.text.toString().trim()
+
+            if (regName.isEmpty()) mViewModel.toast(getString(R.string.caption_empty_name))
+            if (regEmail.isEmpty()) mViewModel.toast(getString(R.string.caption_empty_email))
+            if (regPhone.isEmpty()) mViewModel.toast(getString(R.string.caption_empty_phone))
+            if (regPassword.isEmpty()) mViewModel.toast(getString(R.string.caption_empty_password))
+
+            if (!util().isEmailValid(regEmail)) mViewModel.toast(getString(R.string.caption_valid_email))
+            if (!util().isPhoneValid(regPhone)) mViewModel.toast(getString(R.string.caption_valid_phone))
+
+            if (!regName.isEmpty() and !regEmail.isEmpty() and util().isEmailValid(regEmail)
+                    and !regPhone.isEmpty() and util().isPhoneValid(regPhone)
+                    and !regPassword.isEmpty()) {
+
+                mViewModel.onRegisterButtonPressed(regName, regUsername,
+                        regPhone, regEmail, regPassword)
+
+            }
+
+
         }
 
     }
