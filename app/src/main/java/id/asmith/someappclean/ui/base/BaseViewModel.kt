@@ -16,8 +16,6 @@ abstract class BaseViewModel<Navigator> : ViewModel() {
         this.mNavigator = navigator
     }
 
-    fun getNavigator(): Navigator? {
-        return mNavigator
-    }
+    fun getNavigator(): Navigator? = mNavigator
 
 }

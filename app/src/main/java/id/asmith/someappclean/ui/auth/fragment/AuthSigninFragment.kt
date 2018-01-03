@@ -17,7 +17,7 @@ import android.view.ViewGroup
 import id.asmith.someappclean.R
 import id.asmith.someappclean.ui.auth.AuthViewModel
 import kotlinx.android.synthetic.main.fragment_auth_signin.*
-
+import id.asmith.someappclean.utils.ValidationUtil as util
 
 /**
  * Created by Agus Adhi Sumitro on 01/01/2018.
@@ -67,7 +67,20 @@ class AuthSigninFragment : Fragment() {
         text_signin_signup.movementMethod = LinkMovementMethod.getInstance()
 
         button_signin_go.setOnClickListener {
-            mViewModel.onLoginButtonPressed()
+
+            val email = input_signin_email.text.toString().trim()
+            val password = input_signin_password.text.toString().trim()
+
+            if (email.isEmpty()) mViewModel.toast(getString(R.string.caption_empty_email))
+
+            if (!util().isEmailValid(email)) mViewModel.toast(getString(R.string.caption_valid_email))
+
+            if (password.isEmpty()) mViewModel.toast(getString(R.string.caption_empty_password))
+
+            if (!email.isEmpty() and !password.isEmpty() and util().isEmailValid(email))
+                mViewModel.onLoginButtonPressed(email, password)
+
+
         }
 
     }

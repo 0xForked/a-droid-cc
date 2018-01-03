@@ -12,7 +12,9 @@ interface AuthNavigation {
 
     fun rememberUser(): Boolean
 
-    fun tst(): Toast
+    fun customToast(text: String): Toast
+
+    fun customDialog(title: String, message: String)
 
     fun startMainActivity()
 

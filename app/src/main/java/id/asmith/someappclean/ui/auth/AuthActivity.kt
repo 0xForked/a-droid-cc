@@ -12,11 +12,10 @@ import id.asmith.someappclean.ui.auth.fragment.AuthForgotFragment
 import id.asmith.someappclean.ui.auth.fragment.AuthLockFragment
 import id.asmith.someappclean.ui.auth.fragment.AuthSigninFragment
 import id.asmith.someappclean.ui.auth.fragment.AuthSignupFragment
-import id.asmith.someappclean.ui.splash.SplashActivity
+import id.asmith.someappclean.ui.main.MainActivity
 import id.asmith.someappclean.utils.AppConstants.USER_KEY
 import id.asmith.someappclean.utils.PreferencesUtil
-import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.toast
+import org.jetbrains.anko.*
 import javax.inject.Inject
 
 /**
@@ -47,27 +46,33 @@ class AuthActivity : AppCompatActivity(), AuthNavigation {
 
     }
 
-
     private fun userStatus(): Boolean {
         return true
     }
 
-    override fun rememberUser(): Boolean{
-
-        return mPrefsUtil
-                .putRememberUser(
-                        USER_KEY,
-                        true
-                )
-
-    }
-
     override fun startMainActivity(){
 
-        startActivity<SplashActivity>()
+        startActivity<MainActivity>()
         finish()
 
     }
+
+    override fun customToast(text: String) = toast(text)
+
+    override fun customDialog(title: String, message: String) {
+
+        alert(message, title) {
+            yesButton {
+                toast("yes")
+            }
+            noButton {
+                toast("no")
+            }
+        }.show().setCancelable(false)
+
+    }
+
+    override fun rememberUser() = mPrefsUtil.putRememberUser(USER_KEY, true)
 
     override fun replaceWithLockFragment() = replaceFragment(AuthLockFragment())
 
@@ -76,8 +81,6 @@ class AuthActivity : AppCompatActivity(), AuthNavigation {
     override fun replaceWithSignupFragment() = replaceFragment(AuthSignupFragment())
 
     override fun replaceWithForgotFragment() = replaceFragment(AuthForgotFragment())
-
-    override fun tst() = toast("onPressed")
 
     private fun replaceFragment (fragment: Fragment, cleanStack: Boolean = false) {
 

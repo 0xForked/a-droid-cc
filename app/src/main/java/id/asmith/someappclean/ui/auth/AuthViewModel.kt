@@ -27,29 +27,35 @@ class AuthViewModel : BaseViewModel<AuthNavigation>() {
 
     fun replaceWithForgot() = getNavigator()?.replaceWithForgotFragment()
 
-    /**
-     * @name: Fragment Main Function
-     * @description:
-         * Login function
-         * Register function
-         * Forgot password function
-         * User Detail function (load and save just general data)
-     * @param: {full name, email, phone, password}
-    */
+    private fun rememberMe() = getNavigator()?.rememberUser()
 
-    fun onLoginButtonPressed() {
-        getNavigator()?.tst()
+    fun toast(text: String) = getNavigator()?.customToast(text)
+
+    fun dialog(title: String, message: String) = getNavigator()?.customDialog(title, message)
+
+    /**
+     * @name: Fragment Auth Main Function
+     * @description:
+     * Login function
+     * Register function
+     * Forgot password function
+     * User Detail function (load and save just general data)
+     * @param: {full name, email, phone, password}
+     */
+
+    fun onLoginButtonPressed(email: String, password: String) {
+        toast("Login with $email and $password")
     }
 
     fun onRegisterButtonPressed(){
-        getNavigator()?.tst()
+        toast("Register")
     }
 
     fun onForgotSubmitButtonPressed(){
-        getNavigator()?.tst()
+        toast("Forgot")
     }
 
-    private fun getUserDataRemotely() {
+    private fun getUserDataRemotely(userId: String, userToken: String) {
 
     }
 

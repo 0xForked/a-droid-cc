@@ -1,9 +1,8 @@
 package id.asmith.someappclean.di.module
 
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
+import id.asmith.someappclean.data.remote.ApiService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -22,12 +21,6 @@ import id.asmith.someappclean.utils.AppConstants as utils
 class RemoteModule {
 
     @Provides @Singleton
-    fun provideGson(): Gson =
-            GsonBuilder()
-                    .setLenient()
-                    .create()
-
-    @Provides @Singleton
     fun provideOkHttpClient(): OkHttpClient =
             OkHttpClient
                     .Builder()
@@ -36,13 +29,17 @@ class RemoteModule {
                     .build()
 
     @Provides @Singleton
-    fun provideRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit =
+    fun provideRetrofit(httpClient: OkHttpClient): Retrofit =
             Retrofit.Builder()
                     .baseUrl(utils.API_URL)
-                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                    .client(okHttpClient)
+                    .client(httpClient)
                     .build()
+
+    @Provides @Singleton
+    fun provideService(retrofit: Retrofit): ApiService =
+            retrofit.create(ApiService::class.java)
 
 }
 

@@ -13,7 +13,6 @@ import android.widget.PopupMenu
 import id.asmith.someappclean.R
 import id.asmith.someappclean.ui.auth.AuthViewModel
 import kotlinx.android.synthetic.main.fragment_auth_lock_user.*
-import org.jetbrains.anko.*
 
 /**
  * Created by Agus Adhi Sumitro on 01/01/2018.
@@ -58,12 +57,11 @@ class AuthLockFragment : Fragment(), PopupMenu.OnMenuItemClickListener{
             val lockEmail =  text_lock_email.text.toString().trim()
             val lockPassword = input_lock_password.text.toString().trim()
 
-            if (lockPassword.isEmpty())
-                activity?.longToast(getString(R.string.caption_empty_password))
+            if (lockPassword.isEmpty()) mViewModel.toast(getString(R.string.caption_empty_password))
 
-            //if ( !lockPassword.isEmpty())
-                //loggedUserIn(lockEmail, lockPassword)
-            mViewModel.onLoginButtonPressed()
+            if (!lockPassword.isEmpty())
+                mViewModel.onLoginButtonPressed(lockEmail, lockPassword)
+
         }
 
     }
@@ -82,16 +80,14 @@ class AuthLockFragment : Fragment(), PopupMenu.OnMenuItemClickListener{
         when (item?.itemId) {
 
             R.id.action_delete ->
-                activity?.alert("Are you sure? ",
-                        "Remove account") {
-                    yesButton {
-                        activity?.toast("Whoops")
-                    }
-                    noButton {}
-                }?.show()?.setCancelable(false)
+                mViewModel.dialog(
+                        "Remove account",
+                        "Are you sure?"
+                )
 
         }
 
         return true
     }
+
 }
