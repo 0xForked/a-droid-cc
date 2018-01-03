@@ -1,5 +1,6 @@
 package id.asmith.someappclean.ui.auth.fragment
 
+import android.arch.lifecycle.ViewModelProviders
 import android.graphics.Paint
 import android.graphics.Typeface
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import id.asmith.someappclean.R
+import id.asmith.someappclean.ui.auth.AuthViewModel
 import kotlinx.android.synthetic.main.fragment_auth_forgot_password.*
 import org.jetbrains.anko.longToast
 import id.asmith.someappclean.utils.ValidationUtil as utils
@@ -18,6 +20,10 @@ import id.asmith.someappclean.utils.ValidationUtil as utils
  * aasumitro@gmail.com
  */
 class AuthForgotFragment : Fragment() {
+
+    private val mViewModel: AuthViewModel by lazy {
+        ViewModelProviders.of(activity!!).get(AuthViewModel::class.java)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -32,7 +38,7 @@ class AuthForgotFragment : Fragment() {
                 Paint.UNDERLINE_TEXT_FLAG)
         text_forgot_back.setTypeface(null, Typeface.BOLD)
         text_forgot_back.setOnClickListener {
-            onBack()
+            fragmentManager?.popBackStack()
         }
 
         text_forgot_submit.paintFlags = (text_forgot_submit.paintFlags or
@@ -45,17 +51,13 @@ class AuthForgotFragment : Fragment() {
                 activity?.longToast( getString(R.string.caption_empty_email))
             if (!utils().isEmailValid(forgotEmail))
                 activity?.longToast( getString(R.string.caption_valid_email))
-            if (!forgotEmail.isEmpty() and utils().isEmailValid(forgotEmail))
-                forgotPassword(forgotEmail)
+            /*if (!forgotEmail.isEmpty() and utils().isEmailValid(forgotEmail))
+                forgotPassword(forgotEmail)*/
+        }
+
+        text_forgot_submit.setOnClickListener {
+            mViewModel.onForgotSubmitButtonPressed()
         }
     }
 
-    private fun forgotPassword(forgotEmail: String) {
-
-    }
-
-    private fun onBack() {
-        fragmentManager?.popBackStack()
-
-    }
 }

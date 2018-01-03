@@ -7,6 +7,7 @@ import id.asmith.someappclean.R
 import id.asmith.someappclean.SomeApp
 import id.asmith.someappclean.ui.auth.AuthActivity
 import id.asmith.someappclean.ui.main.MainActivity
+import id.asmith.someappclean.utils.AppConstants.USER_KEY
 import id.asmith.someappclean.utils.PreferencesUtil
 import org.jetbrains.anko.startActivity
 import javax.inject.Inject
@@ -27,7 +28,7 @@ class SplashActivity : AppCompatActivity(), SplashNavigation {
         inject()
 
         mViewModel.setNavigator(this)
-        mViewModel.startStream(userStatus())
+        mViewModel.startTask(userStatus())
 
     }
 
@@ -49,7 +50,7 @@ class SplashActivity : AppCompatActivity(), SplashNavigation {
 
         return mPrefsUtil
                 .getRememberUser(
-                        "logged",
+                        USER_KEY,
                         false
                 )
 

@@ -1,6 +1,7 @@
 package id.asmith.someappclean.ui.splash
 
 import id.asmith.someappclean.ui.base.BaseViewModel
+import java.util.*
 
 
 /**
@@ -11,13 +12,11 @@ import id.asmith.someappclean.ui.base.BaseViewModel
 
 class SplashViewModel : BaseViewModel<SplashNavigation>() {
 
-    fun startStream(isUserStillLogin: Boolean) {
+    fun startTask(isUserStillLogin: Boolean) {
 
-        val background = object : Thread() {
+        Timer().schedule(object : TimerTask() {
             override fun run() {
                 try {
-
-                    sleep((2 * 1000).toLong())
 
                     changeActivity(isUserStillLogin)
 
@@ -27,9 +26,7 @@ class SplashViewModel : BaseViewModel<SplashNavigation>() {
 
                 }
             }
-        }
-
-        background.start()
+        }, 2000)
 
     }
 

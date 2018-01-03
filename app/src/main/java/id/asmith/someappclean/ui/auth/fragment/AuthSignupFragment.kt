@@ -1,5 +1,6 @@
 package id.asmith.someappclean.ui.auth.fragment
 
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.text.Html
@@ -12,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import id.asmith.someappclean.R
+import id.asmith.someappclean.ui.auth.AuthViewModel
 import kotlinx.android.synthetic.main.fragment_auth_signup.*
 import org.jetbrains.anko.longToast
 
@@ -22,6 +24,11 @@ import org.jetbrains.anko.longToast
  */
 class AuthSignupFragment : Fragment() {
 
+    private val mViewModel: AuthViewModel by lazy {
+        ViewModelProviders.of(activity!!).get(AuthViewModel::class.java)
+    }
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -31,21 +38,17 @@ class AuthSignupFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-
-
         image_signup_userPic.setOnClickListener {
             activity?.longToast("Add user pic")
         }
 
-
-        //Login caption
         val captionLogin = "Already a member? <b>Sign in</b>"
 
         @Suppress("DEPRECATION")
         val spannableStringBuilderLogin = SpannableStringBuilder(Html.fromHtml(captionLogin))
         spannableStringBuilderLogin.setSpan(object : ClickableSpan() {
             override fun onClick(view: View) {
-                onBack()
+                fragmentManager?.popBackStack()
             }
         }, captionLogin.indexOf("Sign in") - 3,
                 spannableStringBuilderLogin.length,
@@ -60,10 +63,11 @@ class AuthSignupFragment : Fragment() {
 
         text_signup_signin.text = spannableStringBuilderLogin
         text_signup_signin.movementMethod = LinkMovementMethod.getInstance()
+
+        button_signup_go.setOnClickListener {
+            mViewModel.onRegisterButtonPressed()
+        }
+
     }
 
-    private fun onBack() {
-        fragmentManager?.popBackStack()
-
-    }
 }

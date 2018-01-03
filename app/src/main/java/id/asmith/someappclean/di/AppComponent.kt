@@ -4,9 +4,7 @@ import dagger.Component
 import id.asmith.someappclean.di.module.AppModule
 import id.asmith.someappclean.di.module.RemoteModule
 import id.asmith.someappclean.di.module.UIModule
-import id.asmith.someappclean.ui.auth.fragment.AuthLockFragment
-import id.asmith.someappclean.ui.auth.fragment.AuthSigninFragment
-import id.asmith.someappclean.ui.auth.fragment.AuthSignupFragment
+import id.asmith.someappclean.ui.auth.AuthActivity
 import id.asmith.someappclean.ui.main.MainActivity
 import id.asmith.someappclean.ui.splash.SplashActivity
 import javax.inject.Singleton
@@ -29,8 +27,6 @@ interface AppComponent {
 
     fun inject(target: MainActivity)
     fun inject(target: SplashActivity)
-    fun inject(target: AuthSigninFragment)
-    fun inject(target: AuthLockFragment)
-    fun inject(target: AuthSignupFragment)
+    fun inject(target: AuthActivity)
 
 }

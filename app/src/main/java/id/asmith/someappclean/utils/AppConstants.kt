@@ -14,6 +14,9 @@ object AppConstants {
     val USERNAME_PATTERN = ("^[a-z0-9_-]{3,15}\$")
     val PHONE_PATTERN = ("^[+(00)][0-9]{6,14}$")
 
+    //Prefs
+    val USER_KEY = "isUserStillLogin"
+
     //Local data db
     val DB_NAME = "QueueApp"
     val DB_VERSION = 1

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import id.asmith.someappclean.R
 import id.asmith.someappclean.SomeApp
 import id.asmith.someappclean.ui.splash.SplashActivity
+import id.asmith.someappclean.utils.AppConstants.USER_KEY
 import id.asmith.someappclean.utils.PreferencesUtil
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.longToast
@@ -41,14 +42,14 @@ class MainActivity : AppCompatActivity() {
 
         buttonLogout.setOnClickListener {
             mViewModel.onAddButtonClicked()
-            mPrefsUtil.putRememberUser("logged", false)
+            mPrefsUtil.putRememberUser(USER_KEY, false)
             startActivity<SplashActivity>()
             finish()
         }
 
         val loggedStatus = mPrefsUtil
                 .getRememberUser(
-                        "logged",
+                       USER_KEY,
                         false
                 )
 

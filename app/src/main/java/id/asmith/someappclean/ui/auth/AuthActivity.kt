@@ -1,50 +1,94 @@
 package id.asmith.someappclean.ui.auth
 
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
 import id.asmith.someappclean.R
+import id.asmith.someappclean.SomeApp
+import id.asmith.someappclean.ui.auth.fragment.AuthForgotFragment
+import id.asmith.someappclean.ui.auth.fragment.AuthLockFragment
 import id.asmith.someappclean.ui.auth.fragment.AuthSigninFragment
+import id.asmith.someappclean.ui.auth.fragment.AuthSignupFragment
+import id.asmith.someappclean.ui.splash.SplashActivity
+import id.asmith.someappclean.utils.AppConstants.USER_KEY
+import id.asmith.someappclean.utils.PreferencesUtil
+import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.toast
+import javax.inject.Inject
 
 /**
  * Created by Agus Adhi Sumitro on 27/12/2017.
  * https://asmith.my.id
  * aasumitro@gmail.com
  */
-class AuthActivity : AppCompatActivity() {
+class AuthActivity : AppCompatActivity(), AuthNavigation {
+
+    @Inject
+    lateinit var mPrefsUtil: PreferencesUtil
+
+    private val mViewModel: AuthViewModel by lazy {
+        ViewModelProviders.of(this).get(AuthViewModel::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_auth)
+        inject()
 
-        // Check that the activity is using the layout
         if (savedInstanceState == null) {
 
-            replaceFragment(AuthSigninFragment())
+            mViewModel.setNavigator(this)
+            mViewModel.fragmentTransition(userStatus())
 
         }
 
     }
 
 
-    //Function fragment transition
+    private fun userStatus(): Boolean {
+        return true
+    }
+
+    override fun rememberUser(): Boolean{
+
+        return mPrefsUtil
+                .putRememberUser(
+                        USER_KEY,
+                        true
+                )
+
+    }
+
+    override fun startMainActivity(){
+
+        startActivity<SplashActivity>()
+        finish()
+
+    }
+
+    override fun replaceWithLockFragment() = replaceFragment(AuthLockFragment())
+
+    override fun replaceWithSigninFragment() = replaceFragment(AuthSigninFragment())
+
+    override fun replaceWithSignupFragment() = replaceFragment(AuthSignupFragment())
+
+    override fun replaceWithForgotFragment() = replaceFragment(AuthForgotFragment())
+
+    override fun tst() = toast("onPressed")
+
     private fun replaceFragment (fragment: Fragment, cleanStack: Boolean = false) {
 
         val ft = supportFragmentManager.beginTransaction()
-
-        if (cleanStack) {
-            clearBackStack()
-        }
-
+        if (cleanStack) clearBackStack()
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
         ft.replace(R.id.fragment_container, fragment)
         ft.addToBackStack(null)
         ft.commit()
-    }
 
-    // ini for mo clear dpe balik kanan
+    }
 
     private fun clearBackStack() {
 
@@ -53,16 +97,9 @@ class AuthActivity : AppCompatActivity() {
             val first = manager.getBackStackEntryAt(0)
             manager.popBackStack(first.id, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         }
+
     }
 
-    /*
-    * Ini fungsi supaya pass tekan balik,
-    * langsung dismiss dari kalau nda pake ini,
-    * dia pe fragment mo ta ilang mar dpe activity
-    * masih on jadi tetap aktif dia mar nda ada tampilan
-    * apa2 atau white screen dari di activity_auth dia cuma ada
-    * frame layout yang siap mo replace dengan fragment2 pe layout
-    */
     override fun onBackPressed() {
 
         val fragmentManager = supportFragmentManager
@@ -71,6 +108,15 @@ class AuthActivity : AppCompatActivity() {
         } else {
             finish()
         }
+
+    }
+
+    private fun inject() {
+
+        SomeApp
+                .mInstance
+                .mAppComponent
+                .inject(this)
 
     }
 
