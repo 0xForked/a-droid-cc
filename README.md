@@ -4,7 +4,7 @@ for base version cek this <a href="https://github.com/aasumitro/a-droid">Base ve
 
 </br>
 <p align="center">
-   <img src="https://github.com/aasumitro/a-droid/blob/master/asd2.gif" width="250">
+   <img src="https://github.com/aasumitro/a-droid-cc/blob/master/adroidcc.gif" width="250">
 </p>
 </br>
 
