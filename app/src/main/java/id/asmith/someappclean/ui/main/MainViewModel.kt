@@ -19,9 +19,15 @@ class  MainViewModel : ViewModel() {
         counter.value = 0
     }
 
-    fun onAddButtonClicked() {
+    fun onPlusButtonClicked() {
         counter.value?.let {
             counter.value = it + 1
+        }
+    }
+
+    fun onMinButtonClicked(){
+        counter.value?.let {
+            counter.value = it - 1
         }
     }
 

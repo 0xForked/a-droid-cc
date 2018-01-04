@@ -11,10 +11,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import id.asmith.someappclean.R
+import id.asmith.someappclean.data.local.LocalDataHandler
 import id.asmith.someappclean.ui.auth.AuthViewModel
 import kotlinx.android.synthetic.main.fragment_auth_lock_user.*
 import org.jetbrains.anko.alert
-import org.jetbrains.anko.toast
 
 /**
  * Created by Agus Adhi Sumitro on 01/01/2018.
@@ -31,11 +31,14 @@ class AuthLockFragment : Fragment(), PopupMenu.OnMenuItemClickListener{
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_auth_lock_user, container, false)
-
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        val userData = LocalDataHandler(activity).getUserData()
+        text_lock_name.text = userData["name"]
+        text_lock_email.text = userData["email"]
 
         text_lock_forgot.paintFlags = (text_lock_forgot.paintFlags or
                 Paint.UNDERLINE_TEXT_FLAG)
@@ -68,7 +71,6 @@ class AuthLockFragment : Fragment(), PopupMenu.OnMenuItemClickListener{
 
     }
 
-
     private fun showMenu(view: View) {
         val popup = PopupMenu(activity, view)
         popup.setOnMenuItemClickListener(this@AuthLockFragment)
@@ -76,22 +78,16 @@ class AuthLockFragment : Fragment(), PopupMenu.OnMenuItemClickListener{
         popup.show()
     }
 
-
     override fun onMenuItemClick(item: MenuItem?): Boolean {
 
         when (item?.itemId) {
 
             R.id.action_delete ->
-                activity!!.alert("ASD", "QWE") {
-                    positiveButton("YES") {
-                        activity!!.toast("yes")
+                activity!!.alert("Are you sure?", "Remove account") {
+                    positiveButton(getString(R.string.button_remove)) {
+                        mViewModel.deleteUserDataLocal()
                     }
-                    negativeButton("DISMISS") {
-                        activity!!.toast("no")
-                    }
-                    neutralPressed("HELP") {
-                        activity!!.toast("help")
-                    }
+                    negativeButton(getString(R.string.button_dismiss)) {}
                 }.show().setCancelable(false)
 
         }

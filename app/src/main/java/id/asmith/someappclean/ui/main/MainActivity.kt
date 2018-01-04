@@ -6,12 +6,14 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import id.asmith.someappclean.R
 import id.asmith.someappclean.SomeApp
-import id.asmith.someappclean.ui.splash.SplashActivity
-import id.asmith.someappclean.utils.AppConstants.USER_KEY
+import id.asmith.someappclean.data.local.LocalDataHandler
+import id.asmith.someappclean.ui.auth.AuthActivity
+import id.asmith.someappclean.utils.AppConstants
 import id.asmith.someappclean.utils.PreferencesUtil
 import kotlinx.android.synthetic.main.activity_main.*
-import org.jetbrains.anko.longToast
+import org.jetbrains.anko.alert
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.toast
 import javax.inject.Inject
 
 
@@ -36,24 +38,41 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         injectMain()
 
+        //access user local data
+        val userData = LocalDataHandler(this).getUserData()
+        text_name.text = userData["name"]
+        text_email.text = userData["email"]
+        text_token.text = "Token : " +userData["token"]
+
         mViewModel.getCounter().observe(this, Observer {
-            textName.text = it.toString()
+            text_number.text = it.toString()
         })
 
-        buttonLogout.setOnClickListener {
-            mViewModel.onAddButtonClicked()
-            mPrefsUtil.putRememberUser(USER_KEY, false)
-            startActivity<SplashActivity>()
-            finish()
+        button_main_plus.setOnClickListener {
+            mViewModel.onPlusButtonClicked()
+
         }
 
-        val loggedStatus = mPrefsUtil
-                .getRememberUser(
-                       USER_KEY,
-                        false
-                )
+        button_main_min.setOnClickListener {
+            mViewModel.onMinButtonClicked()
+        }
 
-        longToast(loggedStatus.toString())
+        button_main_password.setOnClickListener {
+            toast("Change password")
+        }
+
+        button_main_logout.setOnClickListener {
+
+            alert("Are you sure?", "Logout") {
+                positiveButton("LOGOUT") {
+                    mPrefsUtil.putRememberUser(AppConstants.USER_LOG_STATUS, false)
+                    startActivity<AuthActivity>()
+                    finish()
+                }
+                negativeButton("CANCEL"){}
+            }.show().setCancelable(false)
+
+        }
 
     }
 

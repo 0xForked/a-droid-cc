@@ -11,13 +11,13 @@ import android.widget.Toast
  */
 interface AuthNavigation {
 
-    fun rememberUser(): Boolean
-
     fun customToast(text: String): Toast
 
     fun customProgressDialog(): ProgressDialog
 
     fun startMainActivity()
+
+    fun startThisActivity()
 
     fun replaceWithLockFragment()
 

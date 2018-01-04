@@ -15,19 +15,18 @@ object AppConstants {
     val PHONE_PATTERN = ("^[+(00)][0-9]{6,14}$")
 
     //Prefs
-    val USER_KEY = "isUserStillLogin"
+    val USER_LOG_STATUS = "isUserStillLogin"
 
     //Local data db
     val DB_NAME = "QueueApp"
     val DB_VERSION = 1
     val DB_TABLE = "user"
     val KEY_ID = "id"
-    val KEY_UID = "uid"
-    val KEY_NAME ="name"
-    val KEY_EMAIL ="email"
-    val KEY_PHONE ="phone"
-    val KEY_TOKEN = "token"
-    val KEY_LOGGED = "isLoggedIn"
+    val KEY_USER_ID = "uid"
+    val KEY_USER_NAME ="name"
+    val KEY_USER_EMAIL ="email"
+    val KEY_USER_PHONE ="phone"
+    val KEY_USER_TOKEN = "token"
     val KEY_CREATED = "created_at"
     val KEY_UPDATED ="updated_at"
 

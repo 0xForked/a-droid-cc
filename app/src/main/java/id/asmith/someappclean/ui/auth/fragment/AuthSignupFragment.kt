@@ -15,7 +15,6 @@ import android.view.ViewGroup
 import id.asmith.someappclean.R
 import id.asmith.someappclean.ui.auth.AuthViewModel
 import kotlinx.android.synthetic.main.fragment_auth_signup.*
-import org.jetbrains.anko.longToast
 import id.asmith.someappclean.utils.ValidationUtil as util
 
 /**
@@ -38,7 +37,7 @@ class AuthSignupFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         image_signup_userPic.setOnClickListener {
-            activity?.longToast("Add user pic")
+            mViewModel.toast("Add user pic")
         }
 
         val captionLogin = "Already a member? <b>Sign in</b>"
@@ -64,6 +63,7 @@ class AuthSignupFragment : Fragment() {
         text_signup_signin.movementMethod = LinkMovementMethod.getInstance()
 
         button_signup_go.setOnClickListener {
+
             val regName = input_signup_fullName.text.toString().trim()
             val regUsername = "Asmith_Users" //actually we not need this
             val regEmail = input_signup_email.text.toString().trim()
@@ -86,7 +86,6 @@ class AuthSignupFragment : Fragment() {
                         regPhone, regEmail, regPassword)
 
             }
-
 
         }
 

@@ -8,13 +8,13 @@ import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
 import id.asmith.someappclean.R
 import id.asmith.someappclean.SomeApp
+import id.asmith.someappclean.data.local.LocalDataHandler
 import id.asmith.someappclean.data.remote.ApiService
 import id.asmith.someappclean.ui.auth.fragment.AuthForgotFragment
 import id.asmith.someappclean.ui.auth.fragment.AuthLockFragment
 import id.asmith.someappclean.ui.auth.fragment.AuthSigninFragment
 import id.asmith.someappclean.ui.auth.fragment.AuthSignupFragment
 import id.asmith.someappclean.ui.main.MainActivity
-import id.asmith.someappclean.utils.AppConstants.USER_KEY
 import id.asmith.someappclean.utils.PreferencesUtil
 import org.jetbrains.anko.indeterminateProgressDialog
 import org.jetbrains.anko.startActivity
@@ -49,12 +49,18 @@ class AuthActivity : AppCompatActivity(), AuthNavigation {
 
         }
 
-        mViewModel.setApiIService(mApiService)
+        mViewModel.setPrefs(mPrefsUtil)
+        mViewModel.setApiService(mApiService)
+        mViewModel.setDatabaseHelper(LocalDataHandler(this))
 
     }
 
     private fun userStatus(): Boolean {
-        return true
+
+        val userData = LocalDataHandler(this).getUserData()
+        val uid = userData["uid"]
+        return uid != null
+
     }
 
     override fun startMainActivity(){
@@ -64,11 +70,16 @@ class AuthActivity : AppCompatActivity(), AuthNavigation {
 
     }
 
+    override fun startThisActivity(){
+
+        startActivity<AuthActivity>()
+        finish()
+
+    }
+
     override fun customToast(text: String) = toast(text)
 
     override fun customProgressDialog() = indeterminateProgressDialog("Please wait...")
-
-    override fun rememberUser() = mPrefsUtil.putRememberUser(USER_KEY, true)
 
     override fun replaceWithLockFragment() = replaceFragment(AuthLockFragment())
 

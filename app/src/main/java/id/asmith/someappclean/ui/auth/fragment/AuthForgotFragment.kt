@@ -27,7 +27,6 @@ class AuthForgotFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_auth_forgot_password, container, false)
     }
 
@@ -45,6 +44,7 @@ class AuthForgotFragment : Fragment() {
                 Paint.UNDERLINE_TEXT_FLAG)
         text_forgot_submit.setTypeface(null, Typeface.BOLD)
         text_forgot_submit.setOnClickListener {
+
             val forgotEmail =  input_forgot_email.text.toString().trim()
 
             if (forgotEmail.isEmpty())
@@ -53,6 +53,7 @@ class AuthForgotFragment : Fragment() {
                 activity?.longToast( getString(R.string.caption_valid_email))
             if (!forgotEmail.isEmpty() and utils().isEmailValid(forgotEmail))
                 mViewModel.onForgotSubmitButtonPressed(forgotEmail)
+
         }
 
     }

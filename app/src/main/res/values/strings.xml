@@ -34,7 +34,8 @@
     <string name="caption_empty_email">Email field is empty</string>
     <string name="caption_empty_phone">Phone field is empty</string>
     <string name="caption_empty_password">Password field is empty</string>
-    <string name="caption_valid_phone">Phone invalid example : +628888</string>
+    <string name="caption_valid_phone">Phone invalid, format suggestion +628888 or 082222 min length 6</string>
+    <string name="caption_email_sent">Link change password has been sent to your e-mail address</string>
 
     <!-- Button -->
     <string name="button_submit">Submit</string>
@@ -42,12 +43,16 @@
     <string name="button_signin">Sign In</string>
     <string name="button_signup">Sign up</string>
     <string name="button_login">Log in</string>
+    <string name="button_remove">REMOVE</string>
+    <string name="button_dismiss">DISMISS</string>
 
     <!-- Sing in/up -->
     <string name="email">Email</string>
     <string name="phone">Mobile</string>
     <string name="full_name">Full Name</string>
     <string name="password">Password</string>
+    <string name="token">Token</string>
+    <string name="logout">Logout</string>
 
 
 </resources>

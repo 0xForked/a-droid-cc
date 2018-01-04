@@ -1,6 +1,6 @@
 package id.asmith.someappclean.ui.splash
 
-import id.asmith.someappclean.ui.base.BaseViewModel
+import android.arch.lifecycle.ViewModel
 import java.util.*
 
 
@@ -10,7 +10,13 @@ import java.util.*
  * aasumitro@gmail.com
  */
 
-class SplashViewModel : BaseViewModel<SplashNavigation>() {
+class SplashViewModel : ViewModel() {
+
+    private var mNavigator: SplashNavigation? = null
+
+    fun setNavigator(navigator: SplashNavigation) {
+        this.mNavigator = navigator
+    }
 
     fun startTask(isUserStillLogin: Boolean) {
 
@@ -34,11 +40,11 @@ class SplashViewModel : BaseViewModel<SplashNavigation>() {
 
         if (isUserStillLogin) {
 
-            getNavigator()?.openMainActivity()
+            mNavigator!!.openMainActivity()
 
         } else {
 
-            getNavigator()?.openAuthActivity()
+            mNavigator!!.openAuthActivity()
 
         }
 

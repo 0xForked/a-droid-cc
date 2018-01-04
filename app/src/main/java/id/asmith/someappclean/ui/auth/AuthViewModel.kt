@@ -1,8 +1,11 @@
 package id.asmith.someappclean.ui.auth
 
-import android.util.Log
+import android.arch.lifecycle.ViewModel
+import id.asmith.someappclean.data.local.LocalDataHandler
+import id.asmith.someappclean.data.model.UserModel
 import id.asmith.someappclean.data.remote.ApiService
-import id.asmith.someappclean.ui.base.BaseViewModel
+import id.asmith.someappclean.utils.AppConstants.USER_LOG_STATUS
+import id.asmith.someappclean.utils.PreferencesUtil
 import id.asmith.someappclean.utils.scheduler.AppSchedulerProvider
 import org.json.JSONObject
 import java.util.*
@@ -13,36 +16,52 @@ import java.util.*
  * https://asmith.my.id
  * aasumitro@gmail.com
  */
-class AuthViewModel : BaseViewModel<AuthNavigation>() {
+class AuthViewModel : ViewModel() {
 
     private var mApiIService: ApiService? = null
 
-    fun setApiIService(apiService: ApiService) {
+    fun setApiService(apiService: ApiService) {
         this.mApiIService = apiService
+    }
+
+    private var mNavigator: AuthNavigation? = null
+
+    fun setNavigator(navigator: AuthNavigation) {
+        this.mNavigator = navigator
+    }
+
+    private var mPrefs: PreferencesUtil? = null
+
+    fun setPrefs(sharedPreferences: PreferencesUtil) {
+        this.mPrefs = sharedPreferences
+    }
+
+    private var mDatabase: LocalDataHandler? = null
+
+    fun setDatabaseHelper(dbHelper: LocalDataHandler) {
+        this.mDatabase = dbHelper
     }
 
     fun fragmentTransition(UserData: Boolean){
 
-        if (UserData)
+        if (!UserData)
             replaceWithSignin()
         else
             replaceWithLock()
 
     }
 
-    private fun replaceWithLock() = getNavigator()?.replaceWithLockFragment()
+    private fun replaceWithLock() = mNavigator?.replaceWithLockFragment()
 
-    fun replaceWithSignin() = getNavigator()?.replaceWithSigninFragment()
+    fun replaceWithSignin() = mNavigator?.replaceWithSigninFragment()
 
-    fun replaceWithSignup()= getNavigator()?.replaceWithSignupFragment()
+    fun replaceWithSignup()= mNavigator?.replaceWithSignupFragment()
 
-    fun replaceWithForgot() = getNavigator()?.replaceWithForgotFragment()
+    fun replaceWithForgot() = mNavigator?.replaceWithForgotFragment()
 
-    private fun rememberMe() = getNavigator()?.rememberUser()
+    fun toast(msg: String) = mNavigator?.customToast(msg)
 
-    fun toast(text: String) = getNavigator()?.customToast(text)
-
-    private fun progressDialog () = getNavigator()?.customProgressDialog()
+    private fun progressDialog () = mNavigator?.customProgressDialog()
 
 
     /**
@@ -51,11 +70,12 @@ class AuthViewModel : BaseViewModel<AuthNavigation>() {
          * Login function
          * Register function
          * Forgot password function
-         * User Detail function (load and save just general data)
+         * User Detail function (load and save [general data])
      * @param: {full name, email, phone, password}
      */
 
     fun onLoginButtonPressed(email: String, password: String) {
+
         val dialog = progressDialog()!!
         dialog.setCancelable(false)
         dialog.show()
@@ -73,13 +93,11 @@ class AuthViewModel : BaseViewModel<AuthNavigation>() {
 
                     if (userStatus != 0) {
 
-                        Log.d("Login", "uid: $userId, token: $userToken")
-
                         getUserDataRemotely(userId, userToken)
 
                     } else {
 
-                        Log.d("Login", "Success but user is inActive")
+                        toast("Your account is inactive")
 
                     }
 
@@ -96,6 +114,7 @@ class AuthViewModel : BaseViewModel<AuthNavigation>() {
 
     fun onRegisterButtonPressed(regName: String, regUsername: String, regPhone: String,
                                 regEmail: String, regPassword: String){
+
         val dialog = progressDialog()!!
         dialog.setCancelable(false)
         dialog.show()
@@ -109,8 +128,6 @@ class AuthViewModel : BaseViewModel<AuthNavigation>() {
                     val mUserData = mResult.getJSONObject("user")
                     val userId = mUserData.getString("uid")
                     val userToken = mUserData.getString("token")
-
-                    Log.d("Login", "uid: $userId, token: $userToken")
 
                     getUserDataRemotely(userId, userToken)
 
@@ -126,6 +143,7 @@ class AuthViewModel : BaseViewModel<AuthNavigation>() {
     }
 
     fun onForgotSubmitButtonPressed(email: String){
+
         val dialog = progressDialog()!!
         dialog.setCancelable(false)
         dialog.show()
@@ -139,7 +157,7 @@ class AuthViewModel : BaseViewModel<AuthNavigation>() {
                     val status = mResult.getString("status")
                     val message = mResult.getString("message")
 
-                    Log.d("LOGIN RESET", "SUCCESS $status $message")
+                    toast("Change password link has been sent to your e-mail address")
 
                     dialog.dismiss()
 
@@ -166,17 +184,15 @@ class AuthViewModel : BaseViewModel<AuthNavigation>() {
                     val mResult = JSONObject(onSuccessResponse.string())
                     val mUserData = mResult.getJSONObject("user")
                     val userId = mUserData.getString("uid")
-                    val userInitial = mUserData.getString("username")
-                    val userFullName = mUserData.getString("name")
+                    val userName = mUserData.getString("name")
                     val userEmail = mUserData.getString("email")
                     val userPhone = mUserData.getString("phone")
                     val userToken = mUserData.getString("token")
                     val createdOn = Calendar.getInstance().time
                     val updatedOn = Calendar.getInstance().time
 
-                    Log.d("LOGIN DETAIL","$userId, $userInitial, $userFullName, " +
-                            "$userEmail, $userPhone, $userToken, $createdOn, $updatedOn" )
-                    toast(mResult.toString())
+                    putUserDataLocally(userId, userName, userEmail,
+                    userPhone, userToken, createdOn.toString(), updatedOn.toString())
 
                     dialog.dismiss()
 
@@ -189,7 +205,24 @@ class AuthViewModel : BaseViewModel<AuthNavigation>() {
 
     }
 
-    private fun putUserDataLocally(){
+    private fun putUserDataLocally(userId: String, userFullName: String, userEmail: String,
+                                   userPhone: String, userToken: String, createdOn: String,
+                                   updatedOn: String){
+
+        mDatabase!!.addUserData(UserModel(userId, userFullName,
+                userEmail, userPhone, userToken,
+                createdOn, updatedOn))
+
+        mPrefs!!.putRememberUser(USER_LOG_STATUS, true)
+
+        mNavigator!!.startMainActivity()
+
+    }
+
+    fun deleteUserDataLocal(){
+
+        mDatabase!!.deleteTableUser()
+        mNavigator!!.startThisActivity()
 
     }
 
