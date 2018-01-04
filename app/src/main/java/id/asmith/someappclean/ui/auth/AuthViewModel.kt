@@ -8,6 +8,7 @@ import id.asmith.someappclean.utils.AppConstants.USER_LOG_STATUS
 import id.asmith.someappclean.utils.PreferencesUtil
 import id.asmith.someappclean.utils.scheduler.AppSchedulerProvider
 import org.json.JSONObject
+import retrofit2.HttpException
 import java.util.*
 
 
@@ -107,6 +108,12 @@ class AuthViewModel : ViewModel() {
 
                     dialog.dismiss()
                     onErrorResponse.printStackTrace()
+                    if (onErrorResponse is HttpException) {
+                        val mResult = JSONObject(onErrorResponse.response()
+                                .errorBody()?.string())
+                        val message = mResult.getString("message")
+                        toast(message)
+                    }
 
                 })
 
@@ -137,6 +144,11 @@ class AuthViewModel : ViewModel() {
 
                     dialog.dismiss()
                     onErrorResponse.printStackTrace()
+                    if (onErrorResponse is HttpException) {
+                        val mResult = JSONObject(onErrorResponse.response()
+                                .errorBody()?.string())
+                        toast(mResult.toString())
+                    }
 
                 })
 
@@ -154,10 +166,9 @@ class AuthViewModel : ViewModel() {
                 .subscribe({ onSuccessResponse ->
 
                     val mResult = JSONObject(onSuccessResponse.string())
-                    val status = mResult.getString("status")
                     val message = mResult.getString("message")
 
-                    toast("Change password link has been sent to your e-mail address")
+                    toast(message)
 
                     dialog.dismiss()
 
@@ -165,6 +176,12 @@ class AuthViewModel : ViewModel() {
 
                     dialog.dismiss()
                     onErrorResponse.printStackTrace()
+                    if (onErrorResponse is HttpException) {
+                        val mResult = JSONObject(onErrorResponse.response()
+                                .errorBody()?.string())
+                        val message = mResult.getString("message")
+                        toast(message)
+                    }
 
                 })
 
