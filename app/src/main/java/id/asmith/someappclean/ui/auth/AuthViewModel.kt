@@ -6,7 +6,7 @@ import id.asmith.someappclean.data.model.UserModel
 import id.asmith.someappclean.data.remote.ApiService
 import id.asmith.someappclean.utils.AppConstants.USER_LOG_STATUS
 import id.asmith.someappclean.utils.PreferencesUtil
-import id.asmith.someappclean.utils.scheduler.AppSchedulerProvider
+import id.asmith.someappclean.utils.scheduler.BaseSchedulerProvider
 import org.json.JSONObject
 import retrofit2.HttpException
 import java.util.*
@@ -35,6 +35,12 @@ class AuthViewModel : ViewModel() {
 
     fun setPrefs(sharedPreferences: PreferencesUtil) {
         this.mPrefs = sharedPreferences
+    }
+
+    private var mScheduler: BaseSchedulerProvider? = null
+
+    fun setScheduler(schedulerProvider: BaseSchedulerProvider) {
+        this.mScheduler = schedulerProvider
     }
 
     private var mDatabase: LocalDataHandler? = null
@@ -82,8 +88,8 @@ class AuthViewModel : ViewModel() {
         dialog.show()
 
         mApiIService!!.signIn(email, password)
-                .subscribeOn(AppSchedulerProvider().multi())
-                .observeOn(AppSchedulerProvider().ui())
+                .subscribeOn(mScheduler!!.multi())
+                .observeOn(mScheduler!!.ui())
                 .subscribe({ onSuccessResponse ->
 
                     val mResult = JSONObject(onSuccessResponse.string())
@@ -127,8 +133,8 @@ class AuthViewModel : ViewModel() {
         dialog.show()
 
         mApiIService!!.signUp(regName, regUsername, regPhone, regEmail, regPassword)
-                .subscribeOn(AppSchedulerProvider().multi())
-                .observeOn(AppSchedulerProvider().ui())
+                .subscribeOn(mScheduler!!.multi())
+                .observeOn(mScheduler!!.ui())
                 .subscribe({ onSuccessResponse ->
 
                     val mResult = JSONObject(onSuccessResponse.string())
@@ -161,8 +167,8 @@ class AuthViewModel : ViewModel() {
         dialog.show()
 
         mApiIService!!.forgotPassword(email)
-                .subscribeOn(AppSchedulerProvider().multi())
-                .observeOn(AppSchedulerProvider().ui())
+                .subscribeOn(mScheduler!!.multi())
+                .observeOn(mScheduler!!.ui())
                 .subscribe({ onSuccessResponse ->
 
                     val mResult = JSONObject(onSuccessResponse.string())
@@ -194,8 +200,8 @@ class AuthViewModel : ViewModel() {
         dialog.show()
 
         mApiIService!!.userDetail(uid, token)
-                .subscribeOn(AppSchedulerProvider().multi())
-                .observeOn(AppSchedulerProvider().ui())
+                .subscribeOn(mScheduler!!.multi())
+                .observeOn(mScheduler!!.ui())
                 .subscribe({ onSuccessResponse ->
 
                     val mResult = JSONObject(onSuccessResponse.string())

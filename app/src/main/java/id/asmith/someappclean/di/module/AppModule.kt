@@ -6,6 +6,8 @@ import dagger.Module
 import dagger.Provides
 import id.asmith.someappclean.SomeApp
 import id.asmith.someappclean.utils.PreferencesUtil
+import id.asmith.someappclean.utils.scheduler.AppSchedulerProvider
+import id.asmith.someappclean.utils.scheduler.BaseSchedulerProvider
 import javax.inject.Singleton
 
 
@@ -29,5 +31,8 @@ class AppModule(private val someApp: SomeApp) {
     @Provides @Singleton
     fun provideSharedPreferences(): SharedPreferences = provideApplication()
             .getSharedPreferences("", Context.MODE_PRIVATE)
+
+    @Provides
+    fun provideSchedulerProvider(): BaseSchedulerProvider = AppSchedulerProvider()
 
 }

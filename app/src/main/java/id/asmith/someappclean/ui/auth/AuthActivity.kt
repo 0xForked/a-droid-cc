@@ -16,6 +16,7 @@ import id.asmith.someappclean.ui.auth.fragment.AuthSigninFragment
 import id.asmith.someappclean.ui.auth.fragment.AuthSignupFragment
 import id.asmith.someappclean.ui.main.MainActivity
 import id.asmith.someappclean.utils.PreferencesUtil
+import id.asmith.someappclean.utils.scheduler.BaseSchedulerProvider
 import org.jetbrains.anko.indeterminateProgressDialog
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
@@ -31,6 +32,8 @@ class AuthActivity : AppCompatActivity(), AuthNavigation {
     @Inject lateinit var mPrefsUtil: PreferencesUtil
 
     @Inject lateinit var mApiService : ApiService
+
+    @Inject lateinit var mScheduler : BaseSchedulerProvider
 
     private val mViewModel: AuthViewModel by lazy {
         ViewModelProviders.of(this).get(AuthViewModel::class.java)
@@ -51,6 +54,7 @@ class AuthActivity : AppCompatActivity(), AuthNavigation {
 
         mViewModel.setPrefs(mPrefsUtil)
         mViewModel.setApiService(mApiService)
+        mViewModel.setScheduler(mScheduler)
         mViewModel.setDatabaseHelper(LocalDataHandler(this))
 
     }

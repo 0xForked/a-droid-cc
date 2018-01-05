@@ -1,6 +1,6 @@
 # a-droid clean version
-Android app with architecture component MVVM (Model View ViewModel) that use a-rest as a service
-for base version cek this <a href="https://github.com/aasumitro/a-droid">Base version</a> 
+Android app with [architecture component](https://developer.android.com/topic/libraries/architecture/index.html) `MVVM` (Model View ViewModel) that use a-rest as a service
+for base version cek this [Base version](https://github.com/aasumitro/a-droid)
 
 </br>
 <p align="center">
@@ -10,12 +10,12 @@ for base version cek this <a href="https://github.com/aasumitro/a-droid">Base ve
 
 ### Library
 
-  - <a href="https://github.com/ReactiveX/Rxjava">RxJava</a>
-  - <a href="https://github.com/ReactiveX/RxAndroid">RxAndroid </a>
-  - <a href="https://github.com/google/dagger">Dagger 2</a>
-  - <a href="https://github.com/square/retrofit">Retrofit</a>
-  - <a href="https://github.com/square/okhttp">okHttp</a>
-  - <a href="https://github.com/Kotlin/anko">Anko</a>
+  - [RxJava](https://github.com/ReactiveX/Rxjava)
+  - [RxAndroid](https://github.com/ReactiveX/RxAndroid)
+  - [Dagger 2](https://github.com/google/dagger)
+  - [Retrofit](https://github.com/square/retrofit)
+  - [okHttp](https://github.com/square/okhttp)
+  - [Anko](https://github.com/Kotlin/anko)
   
 
 ### Related links 
