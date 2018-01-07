@@ -17,6 +17,7 @@ import android.view.ViewGroup
 import id.asmith.someappclean.R
 import id.asmith.someappclean.ui.auth.AuthViewModel
 import kotlinx.android.synthetic.main.fragment_auth_signin.*
+import kotlinx.android.synthetic.main.fragment_auth_signin.view.*
 import id.asmith.someappclean.utils.ValidationUtil as util
 
 /**
@@ -38,11 +39,10 @@ class AuthSigninFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        text_signin_forgot.paintFlags = (text_signin_forgot.paintFlags or
-                Paint.UNDERLINE_TEXT_FLAG)
-        text_signin_forgot.setTypeface(null, Typeface.BOLD)
-        text_signin_forgot.setOnClickListener {
-            mViewModel.replaceWithForgot()
+        text_signin_forgot.apply {
+            paintFlags = (text_signin_forgot.paintFlags or Paint.UNDERLINE_TEXT_FLAG)
+            setTypeface(null, Typeface.BOLD)
+            setOnClickListener { mViewModel.replaceWithForgot() }
         }
 
         val captionRegister = "Don't have an account? <b>Sign up</b>"
@@ -50,9 +50,7 @@ class AuthSigninFragment : Fragment() {
         @Suppress("DEPRECATION")
         val spannableStringBuilderRegister = SpannableStringBuilder(Html.fromHtml(captionRegister))
         spannableStringBuilderRegister.setSpan(object : ClickableSpan() {
-            override fun onClick(view: View) {
-                mViewModel.replaceWithSignup()
-            }
+            override fun onClick(view: View) { mViewModel.replaceWithSignup() }
         }, captionRegister.indexOf("Sign up") - 3,
                 spannableStringBuilderRegister.length,
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
@@ -63,23 +61,24 @@ class AuthSigninFragment : Fragment() {
                 captionRegister.indexOf("Sign up") - 3,
                 spannableStringBuilderRegister.length,
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        text_signin_signup.text = spannableStringBuilderRegister
-        text_signin_signup.movementMethod = LinkMovementMethod.getInstance()
+        text_signin_signup.apply {
+            text = spannableStringBuilderRegister
+            movementMethod = LinkMovementMethod.getInstance()
+        }
 
         button_signin_go.setOnClickListener {
 
             val email = input_signin_email.text.toString().trim()
             val password = input_signin_password.text.toString().trim()
 
-            if (email.isEmpty()) mViewModel.toast(getString(R.string.caption_empty_email))
+            if (email.isEmpty()) input_signin_email.error = (getString(R.string.caption_empty_email))
 
             if (!util().isEmailValid(email)) mViewModel.toast(getString(R.string.caption_valid_email))
 
-            if (password.isEmpty()) mViewModel.toast(getString(R.string.caption_empty_password))
+            if (password.isEmpty()) input_signin_password.error = (getString(R.string.caption_empty_password))
 
             if (!email.isEmpty() and !password.isEmpty() and util().isEmailValid(email))
                 mViewModel.onLoginButtonPressed(email, password)
-
 
         }
 

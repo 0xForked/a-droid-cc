@@ -14,6 +14,7 @@ import id.asmith.someappclean.R
 import id.asmith.someappclean.data.local.LocalDataHandler
 import id.asmith.someappclean.ui.auth.AuthViewModel
 import kotlinx.android.synthetic.main.fragment_auth_lock_user.*
+import kotlinx.android.synthetic.main.fragment_auth_lock_user.view.*
 import org.jetbrains.anko.alert
 
 /**
@@ -40,29 +41,25 @@ class AuthLockFragment : Fragment(), PopupMenu.OnMenuItemClickListener{
         text_lock_name.text = userData["name"]
         text_lock_email.text = userData["email"]
 
-        text_lock_forgot.paintFlags = (text_lock_forgot.paintFlags or
-                Paint.UNDERLINE_TEXT_FLAG)
-        text_lock_forgot.setTypeface(null, Typeface.BOLD)
-        text_lock_forgot.setOnClickListener {
-            mViewModel.replaceWithForgot()
+        text_lock_forgot.apply {
+            paintFlags = (text_lock_forgot.paintFlags or Paint.UNDERLINE_TEXT_FLAG)
+            setTypeface(null, Typeface.BOLD)
+            setOnClickListener { mViewModel.replaceWithForgot() }
         }
 
-        text_lock_singin.paintFlags = (text_lock_forgot.paintFlags or
-                Paint.UNDERLINE_TEXT_FLAG)
-        text_lock_singin.setTypeface(null, Typeface.BOLD)
-        text_lock_singin.setOnClickListener {
-            mViewModel.replaceWithSignin()
+        text_lock_singin.apply {
+            paintFlags = (text_lock_singin.paintFlags or Paint.UNDERLINE_TEXT_FLAG)
+            setTypeface(null, Typeface.BOLD)
+            setOnClickListener { mViewModel.replaceWithSignin() }
         }
 
-        button_lock_menu.setOnClickListener { view ->
-            showMenu(view)
-        }
+        button_lock_menu.setOnClickListener { view -> showMenu(view) }
 
         button_lock_go.setOnClickListener {
             val lockEmail =  text_lock_email.text.toString().trim()
             val lockPassword = input_lock_password.text.toString().trim()
 
-            if (lockPassword.isEmpty()) mViewModel.toast(getString(R.string.caption_empty_password))
+            if (lockPassword.isEmpty()) input_lock_password.error = (getString(R.string.caption_empty_password))
 
             if (!lockPassword.isEmpty())
                 mViewModel.onLoginButtonPressed(lockEmail, lockPassword)

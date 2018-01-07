@@ -33,26 +33,29 @@ class AuthForgotFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        text_forgot_back.paintFlags = (text_forgot_back.paintFlags or
-                Paint.UNDERLINE_TEXT_FLAG)
-        text_forgot_back.setTypeface(null, Typeface.BOLD)
-        text_forgot_back.setOnClickListener {
-            fragmentManager?.popBackStack()
+        text_forgot_back.apply {
+            paintFlags = (text_forgot_back.paintFlags or Paint.UNDERLINE_TEXT_FLAG)
+            setTypeface(null, Typeface.BOLD)
+            setOnClickListener {
+                fragmentManager?.popBackStack()
+            }
         }
 
-        text_forgot_submit.paintFlags = (text_forgot_submit.paintFlags or
-                Paint.UNDERLINE_TEXT_FLAG)
-        text_forgot_submit.setTypeface(null, Typeface.BOLD)
-        text_forgot_submit.setOnClickListener {
+        text_forgot_submit.apply {
+            paintFlags = (text_forgot_submit.paintFlags or Paint.UNDERLINE_TEXT_FLAG)
+            setTypeface(null, Typeface.BOLD)
+            setOnClickListener {
 
-            val forgotEmail =  input_forgot_email.text.toString().trim()
+                val forgotEmail =  input_forgot_email.text.toString().trim()
 
-            if (forgotEmail.isEmpty())
-                activity?.longToast( getString(R.string.caption_empty_email))
-            if (!utils().isEmailValid(forgotEmail))
-                activity?.longToast( getString(R.string.caption_valid_email))
-            if (!forgotEmail.isEmpty() and utils().isEmailValid(forgotEmail))
-                mViewModel.onForgotSubmitButtonPressed(forgotEmail)
+                if (forgotEmail.isEmpty())
+                    input_forgot_email.error = (getString(R.string.caption_empty_email))
+                if (!utils().isEmailValid(forgotEmail))
+                    activity?.longToast( getString(R.string.caption_valid_email))
+                if (!forgotEmail.isEmpty() and utils().isEmailValid(forgotEmail))
+                    mViewModel.onForgotSubmitButtonPressed(forgotEmail)
+
+            }
 
         }
 

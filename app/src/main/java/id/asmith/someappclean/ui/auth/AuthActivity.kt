@@ -45,11 +45,9 @@ class AuthActivity : AppCompatActivity(), AuthNavigation {
 
         inject()
 
-        if (savedInstanceState == null) {
-
+        savedInstanceState.let {
             mViewModel.setNavigator(this)
             mViewModel.fragmentTransition(userStatus())
-
         }
 
         mViewModel.setPrefs(mPrefsUtil)

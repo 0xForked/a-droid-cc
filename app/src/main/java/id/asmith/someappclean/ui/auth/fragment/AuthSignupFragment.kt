@@ -36,18 +36,14 @@ class AuthSignupFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        image_signup_userPic.setOnClickListener {
-            mViewModel.toast("Add user pic")
-        }
+        image_signup_userPic.setOnClickListener { mViewModel.toast("Add user pic") }
 
         val captionLogin = "Already a member? <b>Sign in</b>"
 
         @Suppress("DEPRECATION")
         val spannableStringBuilderLogin = SpannableStringBuilder(Html.fromHtml(captionLogin))
         spannableStringBuilderLogin.setSpan(object : ClickableSpan() {
-            override fun onClick(view: View) {
-                fragmentManager?.popBackStack()
-            }
+            override fun onClick(view: View) { fragmentManager?.popBackStack() }
         }, captionLogin.indexOf("Sign in") - 3,
                 spannableStringBuilderLogin.length,
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
@@ -59,8 +55,10 @@ class AuthSignupFragment : Fragment() {
                 spannableStringBuilderLogin.length,
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 
-        text_signup_signin.text = spannableStringBuilderLogin
-        text_signup_signin.movementMethod = LinkMovementMethod.getInstance()
+        text_signup_signin.apply {
+            text = spannableStringBuilderLogin
+            movementMethod = LinkMovementMethod.getInstance()
+        }
 
         button_signup_go.setOnClickListener {
 
@@ -70,10 +68,10 @@ class AuthSignupFragment : Fragment() {
             val regPhone = input_signup_phone.text.toString().trim()
             val regPassword = input_signup_password.text.toString().trim()
 
-            if (regName.isEmpty()) mViewModel.toast(getString(R.string.caption_empty_name))
-            if (regEmail.isEmpty()) mViewModel.toast(getString(R.string.caption_empty_email))
-            if (regPhone.isEmpty()) mViewModel.toast(getString(R.string.caption_empty_phone))
-            if (regPassword.isEmpty()) mViewModel.toast(getString(R.string.caption_empty_password))
+            if (regName.isEmpty()) input_signup_fullName.error = (getString(R.string.caption_empty_name))
+            if (regEmail.isEmpty()) input_signup_email.error = (getString(R.string.caption_empty_email))
+            if (regPhone.isEmpty()) input_signup_phone.error = (getString(R.string.caption_empty_phone))
+            if (regPassword.isEmpty()) input_signup_password.error = (getString(R.string.caption_empty_password))
 
             if (!util().isEmailValid(regEmail)) mViewModel.toast(getString(R.string.caption_valid_email))
             if (!util().isPhoneValid(regPhone)) mViewModel.toast(getString(R.string.caption_valid_phone))
